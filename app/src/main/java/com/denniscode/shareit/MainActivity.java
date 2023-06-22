@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView textDashboardView;
     private RelativeLayout contentDashboard;
     private UrlManager urlManager;
-    private boolean isLongClickTriggered = false;
 
     @Override
     protected void onResume() {
@@ -114,14 +113,12 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new UrlAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                if (!isLongClickTriggered) {
-                    String url = sharedUrls.get(position);
+                String url = sharedUrls.get(position);
 
-                    // Launch an intent to open the URL
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(url));
-                    startActivity(intent);
-                }
+                // Launch an intent to open the URL
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
             }
         });
 
@@ -129,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnItemLongClickListener(new UrlAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(int position) {
-                isLongClickTriggered = true;
 
                 url = sharedUrls.get(position);
                 // Add a delay of 2 seconds before copying text
@@ -140,9 +136,6 @@ public class MainActivity extends AppCompatActivity {
                         urlManager.copyUrl(url, MainActivity.this);
                         // Show a toast message
                         Toast.makeText(MainActivity.this, "URL Copied", Toast.LENGTH_SHORT).show();
-
-                        // Reset the flag after the long click action is performed
-                        isLongClickTriggered = false;
                     }
                 }, 2000); // 2000 milliseconds = 2 seconds
             }
