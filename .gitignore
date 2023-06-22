@@ -16,5 +16,6 @@ local.properties
 *.pepk
 *.jks
 app/release/
+app/google-services.json
 gradle/
 .idea/
